@@ -2,6 +2,10 @@
   box-sizing: border-box;
   padding: 0 0 38px;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  height: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 1000px) {
@@ -12,6 +16,7 @@
 
 @media screen and (max-width: 600px) {
   .header {
-    padding: 0 27px 31px;
+    padding: 0;
+    flex-direction: column-reverse;
   }
 }

@@ -10,7 +10,7 @@ import DeletePopup from './DeletePopup';
 import { api } from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function App() {
+function Content() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
@@ -120,7 +120,7 @@ function App() {
   }
 
   return (
-    <div className='root'>
+    <>
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Main
@@ -169,8 +169,8 @@ function App() {
         />
         <Footer />
       </CurrentUserContext.Provider>
-    </div>
+    </>
   );
 }
 
-export default App;
+export default Content;

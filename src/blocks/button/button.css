@@ -1,5 +1,5 @@
 .button {
-  all: unset;
+  background: none;
   margin: 0;
   padding: 0;
   cursor: pointer;
@@ -11,4 +11,3 @@
 .button:hover {
   opacity: 0.6;
 }
-
