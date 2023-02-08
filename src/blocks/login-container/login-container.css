@@ -5,6 +5,8 @@
   color: white;
   display: grid;
   grid-template-columns: minmax(260px, 358px);
+  grid-template-rows: 1fr min-content;
+  gap: 20px;
   justify-content: center;
   padding: 60px 0;
 }
