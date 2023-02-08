@@ -11,7 +11,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 18px;
-    padding-bottom: 40px;
+    padding: 27px 0 40px;
     border-bottom: 1px solid rgba(84, 84, 84, 0.7);
   }
 }

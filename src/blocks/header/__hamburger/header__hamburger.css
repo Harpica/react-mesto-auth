@@ -1,5 +1,6 @@
 .header__hamburger {
   display: none;
+  align-self: flex-end;
   height: 21px;
   width: 24px;
   background: url(../../../images/Hamburger-menu.svg) no-repeat;
