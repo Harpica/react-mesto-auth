@@ -1,12 +1,16 @@
 import { useEffect } from 'react';
-import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const ProtectedRouteElement = ({ loggedIn, children }) => {
-  return loggedIn === true ? (
-    <>{children}</>
-  ) : (
-    <Navigate to='/sign-in' replace />
-  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedIn === false) {
+      navigate('/sign-in');
+    }
+  }, [loggedIn, navigate]);
+
+  return <>{children}</>;
 };
 
 export default ProtectedRouteElement;

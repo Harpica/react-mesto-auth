@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import useEscapeKey from "../hooks/useEsc";
 import useOutsideClick from "../hooks/useOutsideClick";
 import failure from "../images/failure.svg";
@@ -16,8 +15,8 @@ const tooltipStatus = {
 };
 
 const InfoTooltip = ({ isOpen, onClose, status }) => {
-	const ref = useOutsideClick(onClose, isOpen);
 	useEscapeKey(onClose, isOpen);
+	const ref = useOutsideClick(onClose, isOpen);
 
 	const image = tooltipStatus[status]?.image;
 	const text = tooltipStatus[status]?.text;
