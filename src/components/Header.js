@@ -1,10 +1,22 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router';
 import Logo from './Logo';
-function Header() {
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
+function Header({ handleLogout }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const currentUser = useContext(CurrentUserContext);
+
+  const navigate = useNavigate();
 
   function handleMenuOnClick() {
     setIsOpen((prev) => !prev);
+  }
+
+  function handleLogOutClick() {
+    handleLogout();
+    navigate('/sign-in');
   }
 
   return (
@@ -24,11 +36,14 @@ function Header() {
           isOpen ? 'header__profile-container_active' : ''
         }`}
       >
-        <p className='header__email'>email</p>
+        <p className='header__email'>
+          {currentUser.email ? currentUser.email : 'email'}
+        </p>
         <button
           className='button header__button'
           type='button'
           aria-label='Выйти из профиля'
+          onClick={handleLogOutClick}
         >
           Выйти
         </button>
