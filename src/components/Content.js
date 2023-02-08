@@ -7,10 +7,11 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import DeletePopup from './DeletePopup';
-import { api } from '../utils/api';
+import { cardsApi } from '../utils/api';
+import { authApi } from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Content() {
+function Content({ userToken, handleLogout }) {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
@@ -24,16 +25,22 @@ function Content() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    const getCardsPromise = api.getInitialCards();
-    const getUserPromise = api.getUserInfo();
-
-    Promise.all([getCardsPromise, getUserPromise])
-      .then(([cardsData, userData]) => {
+    const getCardsPromise = cardsApi.getInitialCards();
+    const getUserPromise = cardsApi.getUserInfo();
+    const checkUserToken = authApi.getUserData(userToken);
+    Promise.all([getCardsPromise, getUserPromise, checkUserToken])
+      .then(([cardsData, userData, authUserData]) => {
         setCards(cardsData);
         setCurrentUser(userData);
+        setCurrentUser((data) => ({
+          ...data,
+          email: authUserData.data.email,
+        }));
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [userToken]);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -62,7 +69,7 @@ function Content() {
   }
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    api
+    cardsApi
       .changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((state) =>
@@ -73,7 +80,7 @@ function Content() {
   }
   function handleCardDelete(card) {
     setIsLoading(true);
-    api
+    cardsApi
       .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
@@ -84,10 +91,14 @@ function Content() {
   }
   function handleUpdateUser(name, about) {
     setIsLoading(true);
-    api
+    cardsApi
       .setUserInfo(name, about)
-      .then((user) => {
-        setCurrentUser(user);
+      .then((newUser) => {
+        setCurrentUser((user) => ({
+          ...user,
+          name: newUser.name,
+          about: newUser.about,
+        }));
         closeAllPopups();
       })
       .catch((err) => console.log(err))
@@ -95,7 +106,7 @@ function Content() {
   }
   function handleUpdateAvatar(avatar) {
     setIsLoading(true);
-    api
+    cardsApi
       .setUserAvatar(avatar)
       .then((avatar) => {
         setCurrentUser((state) => {
@@ -109,7 +120,7 @@ function Content() {
   }
   function handleAddPlaceSubmit(name, link) {
     setIsLoading(true);
-    api
+    cardsApi
       .postCard({ name: name, link: link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
@@ -122,7 +133,7 @@ function Content() {
   return (
     <>
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
+        <Header handleLogout={handleLogout} />
         <Main
           cards={cards}
           onEditProfile={handleEditProfileClick}
