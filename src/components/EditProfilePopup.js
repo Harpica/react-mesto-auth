@@ -31,10 +31,7 @@ const EditProfilePopup = React.memo(
       validities,
       isValid,
       resetForm,
-    } = useForm(
-      { name: nameValidator, description: descriptionValidator },
-      true
-    );
+    } = useForm({ name: nameValidator, description: descriptionValidator });
 
     const ref = useOutsideClick(handleOnClose, isOpen);
 

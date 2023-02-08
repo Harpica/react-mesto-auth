@@ -4,11 +4,11 @@ import React from 'react';
 //    [key: string (is equal to the name of input)] : Validator (class Validator)
 // }
 
-const useForm = (inputValidators, isInitialValid = true) => {
+const useForm = (inputValidators) => {
   const [values, setValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [validities, setValidities] = React.useState({});
-  const [isValid, setIsValid] = React.useState(isInitialValid);
+  const [isValid, setIsValid] = React.useState(false);
 
   React.useEffect(() => {
     const validate = (key, value) => {
@@ -90,7 +90,6 @@ const useForm = (inputValidators, isInitialValid = true) => {
     setValidities({});
     setErrors({});
     setValues({});
-    setIsValid(isInitialValid);
   }
 
   return {

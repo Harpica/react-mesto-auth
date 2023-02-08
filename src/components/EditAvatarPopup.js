@@ -50,7 +50,7 @@ const EditAvatarPopup = React.memo(
         <input
           ref={inputRef}
           type='url'
-          className='popup__input avatar-popup__input-link'
+          className='form__input avatar-popup__input-link'
           name='avatar-link'
           placeholder='Ссылка на аватар'
           onChange={handleChange}

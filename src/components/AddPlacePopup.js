@@ -20,7 +20,7 @@ const linkValidator = new Validator({
 const AddPlacePopup = React.memo(
   ({ isOpen, onClose, onAddPlace, isLoading }) => {
     const { handleChange, values, errors, validities, isValid, resetForm } =
-      useForm({ title: nameValidator, link: linkValidator }, false);
+      useForm({ title: nameValidator, link: linkValidator });
 
     const ref = useOutsideClick(handleOnClose, isOpen);
 
@@ -49,7 +49,7 @@ const AddPlacePopup = React.memo(
       >
         <input
           type='text'
-          className='popup__input'
+          className='form__input'
           name='title'
           placeholder='Название'
           minLength={TEXT_MINLENGTH}
@@ -68,7 +68,7 @@ const AddPlacePopup = React.memo(
         </span>
         <input
           type='url'
-          className='popup__input'
+          className='form__input'
           name='link'
           placeholder='Ссылка на картинку'
           required
