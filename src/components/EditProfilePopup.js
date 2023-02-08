@@ -71,7 +71,7 @@ const EditProfilePopup = React.memo(
       >
         <input
           type='text'
-          className='popup__input'
+          className='form__input'
           id='input-name'
           name='name'
           placeholder='Имя'
@@ -91,7 +91,7 @@ const EditProfilePopup = React.memo(
         </span>
         <input
           type='text'
-          className='popup__input'
+          className='form__input'
           id='input-description'
           name='description'
           placeholder='Род деятельности'
