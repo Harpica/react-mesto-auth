@@ -1,13 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import Footer from './Footer';
-import HeaderAnauth from './HeaderUnauth';
+import { Link } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import useForm from '../hooks/useForm';
 import { Validator } from '../utils/validator';
 import { TEXT_MINLENGTH } from '../utils/constants';
-import { authApi } from '../utils/api';
-import { Link } from 'react-router-dom';
 
 // New validator for each input field
 const emailValidator = new Validator({
@@ -19,38 +14,18 @@ const passwordValidator = new Validator({
   required: true,
 });
 
-const Register = ({ setTooltipOpen, setTooltipStatus }) => {
+const Register = ({ onRegister, isLoading }) => {
   const { handleChange, values, errors, validities, isValid } = useForm({
     email: emailValidator,
     password: passwordValidator,
   });
-  const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   function handleSubmit() {
-    setIsLoading(true);
-    console.log(values);
-    authApi
-      .registerUser(values)
-      .then((res) => {
-        console.log(res);
-        setTooltipStatus('success');
-        setTooltipOpen(true);
-        navigate('/sign-in');
-      })
-      .catch((err) => {
-        setTooltipStatus('failure');
-        setTooltipOpen(true);
-
-        console.log(err);
-      })
-      .finally(() => setIsLoading(false));
+    onRegister(values);
   }
 
   return (
     <>
-      <HeaderAnauth linkText='Войти' linkPath='/sign-in' />
       <div className='login-container'>
         <LoginForm
           name='register'
@@ -104,7 +79,6 @@ const Register = ({ setTooltipOpen, setTooltipStatus }) => {
           Уже зарегистрированы? Войти
         </Link>
       </div>
-      <Footer />
     </>
   );
 };

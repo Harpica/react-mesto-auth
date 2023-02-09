@@ -1,7 +1,3 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import Footer from './Footer';
-import HeaderAnauth from './HeaderUnauth';
 import LoginForm from './LoginForm';
 import useForm from '../hooks/useForm';
 import { Validator } from '../utils/validator';
@@ -17,32 +13,18 @@ const passwordValidator = new Validator({
   required: true,
 });
 
-const Login = ({ handleLogin, setTooltipOpen, setTooltipStatus }) => {
+const Login = ({ onLogin, isLoading }) => {
   const { handleChange, values, errors, validities, isValid } = useForm({
     email: emailValidator,
     password: passwordValidator,
   });
-  const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   function handleSubmit() {
-    setIsLoading(true);
-    handleLogin(values)
-      .then(() => {
-        navigate('/');
-      })
-      .catch((err) => {
-        setTooltipOpen(true);
-        setTooltipStatus('failure');
-        console.error(err);
-      })
-      .finally(() => setIsLoading(false));
+    onLogin(values);
   }
 
   return (
     <>
-      <HeaderAnauth linkText='Регистрация' linkPath='/sign-up' />
       <div className='login-container'>
         <LoginForm
           name='login'
@@ -93,7 +75,6 @@ const Login = ({ handleLogin, setTooltipOpen, setTooltipStatus }) => {
           </span>
         </LoginForm>
       </div>
-      <Footer />
     </>
   );
 };

@@ -1,7 +1,7 @@
-import logo from "../images/logo.svg";
+import logo from '../images/logo.svg';
 
 const Logo = () => {
-	return <img className='logo' src={logo} alt='Логотип Mesto Russia' />;
+  return <img className='logo' src={logo} alt='Логотип Mesto Russia' />;
 };
 
 export default Logo;
