@@ -61,7 +61,7 @@ function App() {
     }
   }, [setIsLoading, setLoggedIn]);
 
-  // Checking if already has token in localStorage (so doesn't need to signing in)
+  // Checking if browser already has token in localStorage (so user doesn't need to sign in)
   useEffect(() => {
     handleLoggedInCheck();
   }, [handleLoggedInCheck]);
